@@ -22,7 +22,7 @@ public class AppendLog {
 		this.fileChannel = randomAccessFile.getChannel();
 	}
 
-	public void append(ByteBuffer buf) throws IOException {
+	public synchronized void append(ByteBuffer buf) throws IOException {
 		do {
 			fileChannel.write(buf);
 		} while (buf.hasRemaining());
