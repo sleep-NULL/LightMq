@@ -1,5 +1,6 @@
 package com.github.sleepnull.lightmq.network.protocol;
 
+import java.io.IOException;
 import java.nio.channels.WritableByteChannel;
 
 /**
@@ -37,8 +38,9 @@ public abstract class Response {
 	 * 发送数据给客户端
 	 * 
 	 * @param channel
+	 * @throws IOException 
 	 */
-	public abstract void writeTo(WritableByteChannel channel);
+	public abstract void writeTo(WritableByteChannel channel) throws IOException;
 
 	/**
 	 * 判断是否数据已经发送完成

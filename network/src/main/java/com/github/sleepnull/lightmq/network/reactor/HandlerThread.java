@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import com.github.sleepnull.lightmq.log.AppendLog;
 import com.github.sleepnull.lightmq.network.protocol.ByteRequest;
+import com.github.sleepnull.lightmq.network.protocol.ConsumeResponse;
 import com.github.sleepnull.lightmq.network.protocol.Request;
 import com.github.sleepnull.lightmq.network.protocol.RequestKey;
+import com.github.sleepnull.lightmq.network.protocol.Response;
 
 /**
  * @author huangyafeng
@@ -57,9 +59,15 @@ public class HandlerThread implements Handler, Runnable {
 			}
 			break;
 		case consume:
+			try {
+				Response res = new ConsumeResponse(req.getProcessorId(), req.getClientId(), log, 0, log.size());
+				requestChannel.putResponse(res);
+			} catch (Exception e) {
+				logger.error("", e);
+			}
 			break;
 		default:
-			logger.error("Invalid request key");
+			logger.error("Invalid request key form {}", req.getClientId());
 		}
 
 	}

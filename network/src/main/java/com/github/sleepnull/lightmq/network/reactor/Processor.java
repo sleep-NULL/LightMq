@@ -161,6 +161,7 @@ public class Processor extends AbstractReactor {
 	}
 
 	private void write(SelectionKey key) throws IOException {
+		long ct = System.currentTimeMillis();
 		Response res = (Response) key.attachment();
 		res.writeTo((SocketChannel) key.channel());
 		if (res.finish()) {
@@ -169,6 +170,7 @@ public class Processor extends AbstractReactor {
 		} else {
 			selector.wakeup();
 		}
+		logger.trace("Write response use {} ms.", System.currentTimeMillis() - ct);
 	}
 
 }

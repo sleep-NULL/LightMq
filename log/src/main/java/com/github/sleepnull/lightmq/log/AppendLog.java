@@ -21,7 +21,7 @@ public class AppendLog {
 		this.randomAccessFile = new RandomAccessFile(new File(fileName), "rw");
 		this.fileChannel = randomAccessFile.getChannel();
 	}
-
+	
 	public synchronized void append(ByteBuffer buf) throws IOException {
 		do {
 			fileChannel.write(buf);
@@ -30,6 +30,10 @@ public class AppendLog {
 
 	public void seek(long pos) throws IOException {
 		fileChannel.position(pos);
+	}
+	
+	public long size() throws IOException {
+		return fileChannel.size();
 	}
 
 	public void close() throws IOException {
